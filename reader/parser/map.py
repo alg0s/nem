@@ -1,5 +1,5 @@
 
-NEM13_MAP = {
+NEM_FIELD_MAP = {
     '100': [
         'record_indicator',
         'version_header',

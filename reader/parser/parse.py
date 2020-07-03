@@ -1,49 +1,61 @@
 # author: goodalg0s@gmail.com
 
 import csv
-from .map import NEM_MAP
+import logging
+from typing import NewType
+from .map import NEM_FIELD_MAP
+from pprint import pprint
+
+ALLOWED_HEADERS = (
+    '100',
+    '250',
+    '550'
+)
+
+logger = logging.getLogger(__name__)
 
 
 class NemParser(object):
 
     def __init__(self, nemfile):
         self.nemfile = nemfile
-        self.reader = None
         self.parsed_rows = []
 
-    def read_csv(self):
+    def read_csv(self) -> None:
         with open(self.nemfile, 'r') as f:
-            self.reader = csv.reader(f, delimiter=',')
+            csvrows = csv.reader(f, delimiter=',')
 
-            for r in self.rows:
-                header = r[0]
+            for row in csvrows:
+                header = row[0]
 
-                if header == '100':
-                    self.parse_row_100(r)
-                elif header == '250':
-                    self.parse_row_250(r)
-                elif header == '550':
-                    self.parse_row_550(r)
+                if header in ALLOWED_HEADERS:
+                    self.parse_row(header, row)
 
-    def verify_row_length(self, header, row):
+    def verify_row_length(self, header, row) -> bool:
         ''' return True if row has sufficient expected elements,
             otherwise False
         '''
-        if len(row) >= len(NEM_MAP[header]):
+        actual_length = len(row)
+        expected_length = len(NEM_FIELD_MAP[header])
+
+        if actual_length >= expected_length:
             return True
         return False
 
-    def parse_row_100(self, row):
-        if self.verify_row_length is False:
+    def parse_row(self, header, row) -> dict:
+        if self.verify_row_length(header, row) is False:
             return None
-        header = '100'
-        columns = NEM_MAP[header]
 
-    def parse_row_250(self, row):
-        print("250: ", row)
+        try:
+            fields = NEM_FIELD_MAP[header]
+            record = {f: row[i] for i, f in enumerate(fields)}
+            return record
 
-    def parse_row_550(self, row):
-        print("550: ", row)
+        except Exception as e:
+            print(f"!!!!!Parse Error: {e} ")
+            print(f"Errored Row: {row}")
+
+        print("\n")
 
     def run(self):
         self.read_csv()

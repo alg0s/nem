@@ -14,7 +14,7 @@ ALLOWED_VERSION_HEADER = (
 )
 
 ALLOWED_DIRECTION_INDICATOR = (
-    ('I', 'Import'),  # ‘I’= Import to grid
+    ('I', 'Import'),  # ‘I’ = Import to grid
     ('E', 'Export'),  # ‘E’ = Export from grid
 )
 
