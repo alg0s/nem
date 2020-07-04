@@ -29,7 +29,7 @@ class TabularInline_ReadOnly(admin.TabularInline):
     extra = 0
 
     def has_change_permission(self, request, obj=None):
-        return request.user.is_superuser
+        return False
 
     def has_add_permission(self, request, obj=None):
         return request.user.is_superuser
@@ -152,6 +152,10 @@ class ReaderRun_Admin(ModelAdmin_ReadOnly):
 
     inlines = (
         ReaderError_Inline,
+    )
+
+    search_fields = (
+        'nemfile',
     )
 
 
