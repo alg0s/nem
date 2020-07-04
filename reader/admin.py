@@ -6,6 +6,8 @@ from .models import (
     Record100,
     Record250,
     Record550,
+    ReaderRun,
+    ReaderError,
 )
 
 
@@ -48,6 +50,10 @@ class Record250_Inline(TabularInline_ReadOnly):
 
 class Record550_Inline(TabularInline_ReadOnly):
     model = Record550
+
+
+class ReaderError_Inline(TabularInline_ReadOnly):
+    model = ReaderError
 
 
 # + -  -  -  Admin -  -  -  - +
@@ -132,4 +138,28 @@ class Record550_Admin(ModelAdmin_ReadOnly):
         'previous_ret_service_order',
         'current_trans_code',
         'current_ret_service_order'
+    )
+
+
+@admin.register(ReaderRun)
+class ReaderRun_Admin(ModelAdmin_ReadOnly):
+    list_display = (
+        'id',
+        'status',
+        'nemfile',
+        'created_at',
+    )
+
+    inlines = (
+        ReaderError_Inline,
+    )
+
+
+@admin.register(ReaderError)
+class ReaderError_Admin(ModelAdmin_ReadOnly):
+    list_display = (
+        'id',
+        'reader_run',
+        'description',
+        'created_at',
     )

@@ -18,9 +18,15 @@ ALLOWED_DIRECTION_INDICATOR = (
     ('E', 'Export'),  # ‘E’ = Export from grid
 )
 
+MAX_LENGTH_FILE_NAME = 400
+
 
 class NemFile(models.Model):
-    name = models.CharField(max_length=400, blank=False, unique=True)
+    name = models.CharField(
+        max_length=MAX_LENGTH_FILE_NAME,
+        blank=False,
+        unique=True
+    )
     description = models.TextField(blank=True, default='')
     created_at = models.DateTimeField(auto_now=True)
 
@@ -133,3 +139,43 @@ class Record550(models.Model):
 
     class Meta:
         unique_together = ('nemfile', 'record_indicator')
+
+
+class ReaderRun(models.Model):
+    ''' Store information of every run of NEM file reader '''
+
+    STATUSES = (
+        ('S', 'Successful'),
+        ('F', 'Failed'),
+    )
+
+    status = models.CharField(max_length=1, choices=STATUSES)
+    created_at = models.DateTimeField(auto_now=True)
+    nemfile = models.ForeignKey(
+        NemFile,
+        blank=False,
+        null=False,
+        related_name='runs',
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return self.nemfile.__str__() + self.created_at
+
+
+class ReaderError(models.Model):
+    ''' Store any error occured during the reader run '''
+
+    reader_run = models.ForeignKey(
+        ReaderRun,
+        blank=False,
+        null=False,
+        related_name='errors',
+        on_delete=models.CASCADE
+    )
+
+    description = models.TextField(blank=False)
+    created_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.reader_run + ': ' + self.description
