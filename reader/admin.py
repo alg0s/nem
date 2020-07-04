@@ -65,6 +65,7 @@ class NemFile_Admin(ModelAdmin_ReadOnly):
         'id',
         'name',
         'description',
+        'path',
         'created_at',
     )
 
@@ -147,6 +148,8 @@ class ReaderRun_Admin(ModelAdmin_ReadOnly):
         'id',
         'status',
         'nemfile',
+        'number_invalid_records',
+        'total_records',
         'created_at',
     )
 

@@ -28,6 +28,10 @@ class NemFile(models.Model):
         unique=True
     )
     description = models.TextField(blank=True, default='')
+    path = models.CharField(
+        max_length=MAX_LENGTH_FILE_NAME,
+        blank=False
+    )
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -150,6 +154,8 @@ class ReaderRun(models.Model):
     )
 
     status = models.CharField(max_length=1, choices=STATUSES)
+    number_invalid_records = models.IntegerField()
+    total_records = models.IntegerField()
     created_at = models.DateTimeField(auto_now=True)
     nemfile = models.ForeignKey(
         NemFile,
