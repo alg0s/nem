@@ -1,0 +1,140 @@
+created_at: 2020-07-04
+author: goodalg0s@gmail.com
+record_types:
+  record_100:
+    - name: record_indicator
+      data_type: numeric
+      length: 3
+      sequence: 1
+    - name: version_header
+      data_type: varchar
+      length: 5
+      sequence: 2
+    - name: datetime
+      data_type: datetime
+      length: 12
+      sequence: 3
+    - name: from_participant
+      data_type: varchar
+      length: 10
+      sequence: 4
+    - name: to_participant
+      data_type: varchar
+      length: 10
+      sequence: 4
+  record_250:
+    - name: record_indicator
+      data_type: numeric
+      length: 3
+      sequence: 1
+    - name: nmi
+      data_type: char
+      length: 10
+      sequence: 2
+    - name: nmi_configuration
+      data_type: varchar
+      length: 240
+      sequence: 3
+    - name: register_id
+      data_type: varchar
+      length: 10
+      sequence: 4
+    - name: nmi_suffix
+      data_type: char
+      length: 2
+      sequence: 5
+    - name: mdm_data_stream_identifier
+      data_type: char
+      length: 2
+      sequence: 6
+    - name: meter_serial_number
+      data_type: varchar
+      length: 12
+      sequence: 7
+    - name: direction_indicator
+      data_type: char
+      length: 1
+      sequence: 8
+    - name: previous_register_read
+      data_type: varchar
+      length: 15
+      sequence: 9
+    - name: previous_register_read_datetime
+      data_type: datetime
+      length: 14
+      sequence: 10
+    - name: previous_quality_method
+      data_type: varchar
+      length: 3
+      sequence: 11
+    - name: previous_reason_code
+      data_type: numeric
+      length: 3
+      sequence: 12
+    - name: previous_reason_description
+      data_type: varchar
+      length: 240
+      sequence: 13
+    - name: current_register_read
+      data_type: varchar
+      length: 15
+      sequence: 14
+    - name: current_register_read_datetime
+      data_type: datetime
+      length: 14
+      sequence: 15
+    - name: current_quality_method
+      data_type: varchar
+      length: 3
+      sequence: 16
+    - name: current_reason_code
+      data_type: numeric
+      length: 3
+      sequence: 17
+    - name: current_reason_description
+      data_type: varchar
+      length: 240
+      sequence: 18
+    - name: quantity
+      data_type: numeric
+      length:
+      sequence: 19
+    - name: uom
+      data_type: varchar
+      length: 5
+      sequence: 20
+    - name: next_scheduled_read_date
+      data_type: date
+      length: 8
+      sequence: 21
+    - name: update_datetime
+      data_type: datetime
+      length: 14
+      sequence: 22
+    - name: msats_load_datetime
+      data_type: datetime
+      length: 14
+      sequence: 23
+  record_550:
+    - name: record_indicator
+      data_type: numeric
+      length: 3
+      sequence: 1
+    - name: previous_trans_code
+      data_type: char
+      length: 1
+      sequence: 2
+    - name: previous_ret_service_order
+      data_type: varchar
+      length: 15
+      sequence: 3
+    - name: current_trans_code
+      data_type: char
+      length: 1
+      sequence: 4
+    - name: current_ret_service_order
+      data_type: varchar
+      length: 15
+      sequence: 5
+
+
