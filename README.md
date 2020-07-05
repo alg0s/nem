@@ -39,4 +39,10 @@ python manage.py createsuperuser
 ```
 2. Navigate to 127.0.0.1:8000/admin to log in and start browsing
 
-### Handling exceptions
+### Ingestion Policy
+
+NemParser has a strict data ingestion policy: only non-corrupted NEM file shall be imported into the database. It means that if the parser finds any errors during the process, either from the row or the field, it will not save the data into the database. It will log the errors in two tables ReaderError and NemFileError. This will help avoid having to cleaning up the data when one or more rows have been incorrect or corrupted. 
+
+### Error Handling
+
+If there is an error occurs during the parsing process, the file's data shall not be ingested into the database, and the ReaderRun table shall record an Failed run of the file. This is to make sure that only proper data are imported and no file is ingested twice.
