@@ -8,6 +8,7 @@ from .models import (
     Record550,
     ReaderRun,
     ReaderError,
+    NemFileError,
 )
 
 
@@ -56,6 +57,10 @@ class ReaderError_Inline(TabularInline_ReadOnly):
     model = ReaderError
 
 
+class NemFileError_Inline(TabularInline_ReadOnly):
+    model = NemFileError
+
+
 # + -  -  -  Admin -  -  -  - +
 
 
@@ -76,7 +81,8 @@ class NemFile_Admin(ModelAdmin_ReadOnly):
     inlines = [
         Record100_Inline,
         Record250_Inline,
-        Record550_Inline
+        Record550_Inline,
+        NemFileError_Inline,
     ]
 
 
@@ -128,6 +134,10 @@ class Record250_Admin(ModelAdmin_ReadOnly):
         'meter_serial_number',
     )
 
+    list_filter = (
+        'nmi',
+    )
+
 
 @admin.register(Record550)
 class Record550_Admin(ModelAdmin_ReadOnly):
@@ -169,4 +179,17 @@ class ReaderError_Admin(ModelAdmin_ReadOnly):
         'reader_run',
         'description',
         'created_at',
+    )
+
+
+@admin.register(NemFileError)
+class NemFileError_Admin(ModelAdmin_ReadOnly):
+    list_display = (
+        'id',
+        'nemfile',
+        'description',
+        'created_at',
+    )
+    search_fields = (
+        'nemfile',
     )

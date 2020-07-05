@@ -2,6 +2,8 @@
 
 from django.db import models
 
+
+
 ALLOWED_RECORD_INDICATOR = (
     ('100', '100'),
     ('250', '250'),
@@ -77,7 +79,7 @@ class Record250(models.Model):
     register_id = models.CharField(max_length=10)
     nmi_suffix = models.CharField(max_length=2)
 
-    mdm_data_stream_identifier = models.CharField(max_length=2)
+    mdm_data_stream_identifier = models.CharField(max_length=2, null=True)
     meter_serial_number = models.CharField(max_length=12)
     direction_indicator = models.CharField(
         max_length=1,
@@ -86,21 +88,21 @@ class Record250(models.Model):
 
     previous_register_read = models.CharField(max_length=15)
     previous_register_read_datetime = models.DateTimeField()
-    previous_quality_method = models.CharField(max_length=3)
-    previous_reason_code = models.IntegerField()
-    previous_reason_description = models.CharField(max_length=240)
+    previous_quality_method = models.CharField(max_length=3, null=True)
+    previous_reason_code = models.IntegerField(null=True)
+    previous_reason_description = models.CharField(max_length=240, null=True)
 
-    current_register_read = models.CharField(max_length=15)
-    current_register_read_datetime = models.DateTimeField()
-    current_quality_method = models.CharField(max_length=3)
-    current_reason_code = models.IntegerField()
-    current_reason_description = models.CharField(max_length=240)
+    current_register_read = models.CharField(max_length=15, null=True)
+    current_register_read_datetime = models.DateTimeField(null=True)
+    current_quality_method = models.CharField(max_length=3, null=True)
+    current_reason_code = models.IntegerField(null=True)
+    current_reason_description = models.CharField(max_length=240, null=True)
 
-    quantity = models.IntegerField()
-    uom = models.CharField(max_length=5)
-    next_scheduled_read_date = models.DateField()
-    update_datetime = models.DateTimeField()
-    msats_load_datetime = models.DateTimeField()
+    quantity = models.DecimalField(max_digits=40, decimal_places=5, null=True)
+    uom = models.CharField(max_length=5, null=True)
+    next_scheduled_read_date = models.DateField(null=True)
+    update_datetime = models.DateTimeField(null=True)
+    msats_load_datetime = models.DateTimeField(null=True)
 
     nemfile = models.ForeignKey(
         NemFile,
@@ -110,9 +112,6 @@ class Record250(models.Model):
         on_delete=models.CASCADE
     )
 
-    class Meta:
-        unique_together = ('nemfile', 'record_indicator')
-
 
 class Record550(models.Model):
     record_indicator = models.CharField(
@@ -120,10 +119,10 @@ class Record550(models.Model):
         blank=False,
         choices=ALLOWED_RECORD_INDICATOR
     )
-    previous_trans_code = models.CharField(max_length=1)
-    previous_ret_service_order = models.CharField(max_length=15)
-    current_trans_code = models.CharField(max_length=1)
-    current_ret_service_order = models.CharField(max_length=15)
+    previous_trans_code = models.CharField(max_length=1, null=True)
+    previous_ret_service_order = models.CharField(max_length=15, null=True)
+    current_trans_code = models.CharField(max_length=1, null=True)
+    current_ret_service_order = models.CharField(max_length=15, null=True)
 
     nemfile = models.ForeignKey(
         NemFile,
@@ -141,9 +140,6 @@ class Record550(models.Model):
         on_delete=models.CASCADE
     )
 
-    class Meta:
-        unique_together = ('nemfile', 'record_indicator')
-
 
 class ReaderRun(models.Model):
     ''' Store information of every run of NEM file reader '''
@@ -154,8 +150,8 @@ class ReaderRun(models.Model):
     )
 
     status = models.CharField(max_length=1, choices=STATUSES)
-    number_invalid_records = models.IntegerField()
-    total_records = models.IntegerField()
+    number_invalid_records = models.IntegerField(null=True)
+    total_records = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now=True)
     nemfile = models.ForeignKey(
         NemFile,
@@ -166,7 +162,7 @@ class ReaderRun(models.Model):
     )
 
     def __str__(self):
-        return self.nemfile.__str__() + self.created_at
+        return self.nemfile.__str__()
 
 
 class ReaderError(models.Model):
@@ -184,4 +180,22 @@ class ReaderError(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.reader_run + ': ' + self.description
+        return self.reader_run.__str__() + ': ' + self.description
+
+
+class NemFileError(models.Model):
+    ''' Store errors identified to a NEM file '''
+
+    nemfile = models.ForeignKey(
+        NemFile,
+        blank=False,
+        null=False,
+        related_name='errors',
+        on_delete=models.CASCADE
+    )
+
+    description = models.TextField(blank=False)
+    created_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.nemfile.__str__() + ': ' + self.description
