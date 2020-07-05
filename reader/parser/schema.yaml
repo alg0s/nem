@@ -1,7 +1,11 @@
 created_at: 2020-07-04
 author: goodalg0s@gmail.com
+parent_types:
+  "100": 
+  "250": 
+  "550": "250"
 record_types:
-  record_100:
+  "100":
     - name: record_indicator
       data_type: numeric
       length: 3
@@ -21,8 +25,8 @@ record_types:
     - name: to_participant
       data_type: varchar
       length: 10
-      sequence: 4
-  record_250:
+      sequence: 5
+  "250":
     - name: record_indicator
       data_type: numeric
       length: 3
@@ -115,7 +119,7 @@ record_types:
       data_type: datetime
       length: 14
       sequence: 23
-  record_550:
+  "550":
     - name: record_indicator
       data_type: numeric
       length: 3
