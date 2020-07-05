@@ -5,7 +5,15 @@ https://www.aemo.com.au/-/media/Files/Electricity/NEM/Retail_and_Metering/Meteri
 
 ## Installation
 
-Download the package and install requirements
+Download the package *nem.tgz*
+
+Uncompress the tar file
+
+```sh
+tar -xvf nem.tgz
+```
+
+Install requirements
 
 ```sh
 pip install -r requirements.txt
