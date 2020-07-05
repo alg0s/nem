@@ -1,6 +1,7 @@
 # NEM File Parser Python Framework
 
-Nem provides a very convenient framework to read, process, ingest and browse energy consumption data provided in CSV format. The format of the data is defined by AEMO. 
+Nem provides a very convenient framework to read, process, ingest and browse energy consumption data provided in CSV format. The format of the data is defined by AEMO:
+https://www.aemo.com.au/-/media/Files/Electricity/NEM/Retail_and_Metering/Metering-Procedures/2018/MDFF-Specification-NEM12--NEM13-v106.pdf
 
 ## Installation
 
