@@ -10,7 +10,6 @@ Download the package and install requirements
 pip install -r requirements.txt
 ```
 
-
 ### Requirements
 
 -   Python 3.6+
@@ -37,7 +36,7 @@ python manage.py runserver 8000
 ```sh
 python manage.py createsuperuser
 ```
-2. Navigate to 127.0.0.1:8000/admin to log in and start browsing
+2. Navigate to ***127.0.0.1:8000/admin*** to log in and start browsing
 
 ### Ingestion Policy
 
@@ -46,3 +45,14 @@ NemParser has a strict data ingestion policy: only non-corrupted NEM file shall 
 ### Error Handling
 
 If there is an error occurs during the parsing process, the file's data shall not be ingested into the database, and the ReaderRun table shall record an Failed run of the file. This is to make sure that only proper data are imported and no file is ingested twice.
+
+### Future Development
+
+##### Persist schema metadata to database
+Currently, AEMO's data definition is stored in a YAML file. To better maintain it, we will store them into the database. 
+
+##### Improve record processing speed
+Currently, the parser goes through the file line by line to process and check for issues. For a much larger file (millions of records), this approach might not be efficient. 
+
+##### Extend features for NEM12 and other files 
+Currently, Nem only supports NEM13 CSV files. We would like to support more types of files. 
